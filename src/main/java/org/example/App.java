@@ -91,11 +91,11 @@ public class App
             }
     }
     private static void viewAnimals(ArrayList<Animal> animals) {
-        System.out.println("Animal List");
-        System.out.println("------");
+        StringBuilder listBld = new StringBuilder("Animal List \n ------------");
         for (Animal animal : animals) {
-            animal.animalInfo();
-        }
+            listBld.append(animal.animalInfo());
+         }
+        System.out.println(listBld);
     }
 
     public static void menu(){

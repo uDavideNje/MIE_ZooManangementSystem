@@ -3,8 +3,7 @@ package org.example;
 public class Animal {
     private String name;
     private  String species;
-    private StringBuilder nameStrBld = new StringBuilder("Name of animal: ");
-    private StringBuilder speciesStrBld = new StringBuilder("Species of name: ");
+
 
     public String getName() {
         return name;
@@ -27,9 +26,11 @@ public class Animal {
         this.species = species;
     }
 
-    public void animalInfo(){
-        System.out.println( nameStrBld.append(name));
-        System.out.println( speciesStrBld.append(species));
+    public String animalInfo(){
+//        System.out.println( "Name of animal: "+ name);
+//        System.out.println( "Species of name: "+ species);
+
+        return "\n Name of animal: "+ name +"\n Species of name: " + species ;
     }
 
     public void makeNoise(){
