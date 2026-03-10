@@ -3,10 +3,7 @@ package org.example;
 
 import org.sdf.InputError;
 
-import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class App
 {
@@ -64,32 +61,20 @@ public class App
 
     private static void searchAnimal(ArrayList<Animal> animals) throws InputError {
         Scanner kb = new Scanner(System.in);
-        System.out.println("enter animal name:");
-        String animalName = kb.next();
-        int cnt =0;
-        System.out.println("enter animal species:"+
-                "\n 1. Lion" +
-                "\n 2. Elephant" +
-                "\n 3. Bird");
-        int animalChoice = kb.nextInt();
-        inputCheck(animalChoice);
-        String animalSpecies = switch(animalChoice){
-            case 1 -> "Lion";
-            case 2 -> "Elephant";
-            case 3 -> "Bird";
-            default -> "invald";
-        };
-        for(int i = 0; i <animals.size(); i++){
-            if(animals.get(i).getName().contains(animalName) && animals.get(i).getSpecies().contains(animalSpecies)){
-                animals.get(i).makeNoise();
-                cnt++;
-            }
+        System.out.println("Pick search type: \n" +
+                "1. Search by name and species \n" +
+                "2. Search by name ");
+        int typeSearch = kb.nextInt();
+        switch (typeSearch){
+            case 1: nameAndSpeciesSearch(animals);
+            break;
+            case 2: searchByName(animals);
+            break;
+            default:
+                System.out.println(" you've entered an invalid option");
         }
-        if(cnt>0){
-            System.out.println("There were "+ cnt + " " +animalSpecies +"s with the name " +animalName + " found."  );
-        }else{
-            System.out.println("There were no " +animalSpecies +"s with the name " +animalName + " found."  );
-        }
+
+
 //        Animal find = new Animal(animalName,animalSpecies);
 //        int index = animals.indexOf(find);
 //        System.out.println(animalName);
@@ -131,7 +116,7 @@ public class App
         species = kb.nextInt();
         inputCheck(species);
         System.out.println("Enter animal name: ");
-        name = kb.next();
+        name = kb.next().toLowerCase();
 
         switch (species){
             case 1: animals.add(new Lion(name));
@@ -140,6 +125,54 @@ public class App
             break;
             case 3: animals.add(new Bird(name));
         }
+    }
+
+    public static void nameAndSpeciesSearch(ArrayList<Animal> animals) throws InputError {
+        Scanner kb = new Scanner(System.in);
+        System.out.println("enter animal name:");
+        String animalName = kb.next().toLowerCase();
+        int cnt =0;
+        System.out.println("enter animal species:"+
+                "\n 1. Lion" +
+                "\n 2. Elephant" +
+                "\n 3. Bird");
+        int animalChoice = kb.nextInt();
+        inputCheck(animalChoice);
+        String animalSpecies = switch(animalChoice){
+            case 1 -> "Lion";
+            case 2 -> "Elephant";
+            case 3 -> "Bird";
+            default -> "invald";
+        };
+        for(int i = 0; i <animals.size(); i++){
+            if(animals.get(i).getName().contains(animalName) && animals.get(i).getSpecies().contains(animalSpecies)){
+                animals.get(i).animalInfo();
+                animals.get(i).makeNoise();
+                cnt++;
+            }
+        }
+        if(cnt>0){
+            System.out.println("There were "+ cnt + " " +animalSpecies +"s with the name " +animalName + " found."  );
+        }else{
+            System.out.println("There were no " +animalSpecies +"s with the name " +animalName + " found."  );
+        }
+    }
+
+    public static void searchByName(ArrayList<Animal> animals){
+        int cnt =0;
+        Scanner kb = new Scanner(System.in);
+        System.out.println("enter animal name:");
+        String animalName = kb.next().toLowerCase();
+        for(int i= 0; i < animals.size(); i++){
+            if(animals.get(i).getName().contains(animalName)){
+                animals.get(i).animalInfo();
+                animals.get(i).makeNoise();
+                cnt++;
+
+            }
+
+        }
+        System.out.println("There were "+ cnt + " animals with the name " +animalName + " found."  );
     }
 
 }
